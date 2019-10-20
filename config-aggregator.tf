@@ -48,8 +48,7 @@ resource "aws_config_configuration_aggregator" "account" {
   name       = "account-aggregator"
 
   account_aggregation_source {
-    account_ids = ["${var.account_ids}"]
+    account_ids = "${var.account_ids}"
     all_regions = true
-    role_arn    = "${aws_iam_role.aggregator.0.arn}"
   }
 }
