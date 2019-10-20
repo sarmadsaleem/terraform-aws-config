@@ -26,6 +26,8 @@ data "template_file" "aws_config_acm_certificate_expiration" {
 #
 
 resource "aws_config_config_rule" "iam-password-policy" {
+  provider = "aws.selected"
+
   name             = "iam-password-policy"
   description      = "Ensure the account password policy for IAM users meets the specified requirements"
   input_parameters = "${data.template_file.aws_config_iam_password_policy.rendered}"
@@ -44,6 +46,8 @@ resource "aws_config_config_rule" "iam-password-policy" {
 }
 
 resource "aws_config_config_rule" "cloudtrail-enabled" {
+  provider = "aws.selected"
+
   name        = "cloudtrail-enabled"
   description = "Ensure CloudTrail is enabled"
 
@@ -61,6 +65,8 @@ resource "aws_config_config_rule" "cloudtrail-enabled" {
 }
 
 resource "aws_config_config_rule" "multi-region-cloud-trail-enabled" {
+  provider = "aws.selected"
+
   count       = "${var.check_multi_region_cloud_trail ? 1 : 0}"
   name        = "multi-region-cloud-trail-enabled"
   description = "Checks that there is at least one multi-region AWS CloudTrail. The rule is NON_COMPLIANT if the trails do not match inputs parameters."
@@ -79,6 +85,8 @@ resource "aws_config_config_rule" "multi-region-cloud-trail-enabled" {
 }
 
 resource "aws_config_config_rule" "cloud-trail-encryption-enabled" {
+  provider = "aws.selected"
+
   count       = "${var.check_cloud_trail_encryption ? 1 : 0}"
   name        = "cloud-trail-encryption-enabled"
   description = "Checks whether AWS CloudTrail is configured to use the server side encryption (SSE) AWS Key Management Service (AWS KMS) customer master key (CMK) encryption. The rule is COMPLIANT if the KmsKeyId is defined."
@@ -97,6 +105,8 @@ resource "aws_config_config_rule" "cloud-trail-encryption-enabled" {
 }
 
 resource "aws_config_config_rule" "cloud-trail-log-file-validation-enabled" {
+  provider = "aws.selected"
+
   count       = "${var.check_cloud_trail_log_file_validation ? 1 : 0}"
   name        = "cloud-trail-log-file-validation-enabled"
   description = "Checks whether AWS CloudTrail creates a signed digest file with logs. AWS recommends that the file validation must be enabled on all trails. The rule is NON_COMPLIANT if the validation is not enabled."
@@ -115,6 +125,8 @@ resource "aws_config_config_rule" "cloud-trail-log-file-validation-enabled" {
 }
 
 resource "aws_config_config_rule" "instances-in-vpc" {
+  provider = "aws.selected"
+
   name        = "instances-in-vpc"
   description = "Ensure all EC2 instances run in a VPC"
 
@@ -130,6 +142,8 @@ resource "aws_config_config_rule" "instances-in-vpc" {
 }
 
 resource "aws_config_config_rule" "root-account-mfa-enabled" {
+  provider = "aws.selected"
+
   name        = "root-account-mfa-enabled"
   description = "Ensure root AWS account has MFA enabled"
 
@@ -147,6 +161,8 @@ resource "aws_config_config_rule" "root-account-mfa-enabled" {
 }
 
 resource "aws_config_config_rule" "acm-certificate-expiration-check" {
+  provider = "aws.selected"
+
   name             = "acm-certificate-expiration-check"
   description      = "Ensures ACM Certificates in your account are marked for expiration within the specified number of days"
   input_parameters = "${data.template_file.aws_config_acm_certificate_expiration.rendered}"
@@ -162,6 +178,8 @@ resource "aws_config_config_rule" "acm-certificate-expiration-check" {
 }
 
 resource "aws_config_config_rule" "ec2-volume-inuse-check" {
+  provider = "aws.selected"
+
   name        = "ec2-volume-inuse-check"
   description = "Checks whether EBS volumes are attached to EC2 instances"
 
@@ -174,6 +192,8 @@ resource "aws_config_config_rule" "ec2-volume-inuse-check" {
 }
 
 resource "aws_config_config_rule" "iam-user-no-policies-check" {
+  provider = "aws.selected"
+
   name        = "iam-user-no-policies-check"
   description = "Ensure that none of your IAM users have policies attached. IAM users must inherit permissions from IAM groups or roles."
 
@@ -186,6 +206,8 @@ resource "aws_config_config_rule" "iam-user-no-policies-check" {
 }
 
 resource "aws_config_config_rule" "iam-group-has-users-check" {
+  provider = "aws.selected"
+
   name        = "iam-group-has-users-check"
   description = "Checks whether IAM groups have at least one IAM user."
 
@@ -198,6 +220,8 @@ resource "aws_config_config_rule" "iam-group-has-users-check" {
 }
 
 resource "aws_config_config_rule" "rds-storage-encrypted" {
+  provider = "aws.selected"
+
   name        = "rds-storage-encrypted"
   description = "Checks whether storage encryption is enabled for your RDS DB instances."
 
@@ -210,6 +234,8 @@ resource "aws_config_config_rule" "rds-storage-encrypted" {
 }
 
 resource "aws_config_config_rule" "rds-instance-public-access-check" {
+  provider = "aws.selected"
+
   count = "${var.check_rds_public_access ? 1 : 0}"
 
   name        = "rds-instance-public-access-check"
@@ -224,6 +250,8 @@ resource "aws_config_config_rule" "rds-instance-public-access-check" {
 }
 
 resource "aws_config_config_rule" "rds-snapshots-public-prohibited" {
+  provider = "aws.selected"
+
   name        = "rds-snapshots-public-prohibited"
   description = "Checks if Amazon Relational Database Service (Amazon RDS) snapshots are public."
 
@@ -236,6 +264,8 @@ resource "aws_config_config_rule" "rds-snapshots-public-prohibited" {
 }
 
 resource "aws_config_config_rule" "guardduty-enabled-centralized" {
+  provider = "aws.selected"
+
   count = "${var.check_guard_duty ? 1 : 0}"
 
   name        = "guardduty-enabled-centralized"
@@ -252,6 +282,8 @@ resource "aws_config_config_rule" "guardduty-enabled-centralized" {
 }
 
 resource "aws_config_config_rule" "s3-bucket-public-write-prohibited" {
+  provider = "aws.selected"
+
   name        = "s3-bucket-public-write-prohibited"
   description = "Checks that your S3 buckets do not allow public write access."
 
@@ -264,6 +296,8 @@ resource "aws_config_config_rule" "s3-bucket-public-write-prohibited" {
 }
 
 resource "aws_config_config_rule" "eip_attached" {
+  provider = "aws.selected"
+
   count = "${var.check_eip_attached ? 1 : 0}"
 
   name        = "eip-attached"

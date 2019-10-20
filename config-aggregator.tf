@@ -32,6 +32,8 @@ resource "aws_iam_role_policy_attachment" "aggregator" {
 #
 
 resource "aws_config_configuration_aggregator" "organization" {
+  provider = "aws.selected"
+
   count      = "${var.aggregate_organization ? 1 : 0}"
   depends_on = ["aws_iam_role_policy_attachment.aggregator"]
   name       = "organization-aggregator"
@@ -43,6 +45,8 @@ resource "aws_config_configuration_aggregator" "organization" {
 }
 
 resource "aws_config_configuration_aggregator" "account" {
+  provider = "aws.selected"
+
   count      = "${var.aggregate_organization ? 1 : 0}"
   depends_on = ["aws_iam_role_policy_attachment.aggregator"]
   name       = "account-aggregator"

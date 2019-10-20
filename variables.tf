@@ -99,6 +99,14 @@ variable "check_multi_region_cloud_trail" {
   default     = false
 }
 
+variable "region" {
+
+}
+
+variable "primary_region" {
+
+}
+
 variable "check_cloud_trail_encryption" {
   description = "Enable cloud-trail-encryption-enabled rule"
   default     = false
