@@ -34,9 +34,21 @@ resource "aws_iam_role_policy_attachment" "aggregator" {
 resource "aws_config_configuration_aggregator" "organization" {
   count      = "${var.aggregate_organization ? 1 : 0}"
   depends_on = ["aws_iam_role_policy_attachment.aggregator"]
-  name       = "${var.config_aggregator_name}"
+  name       = "organization-aggregator"
 
   organization_aggregation_source {
+    all_regions = true
+    role_arn    = "${aws_iam_role.aggregator.0.arn}"
+  }
+}
+
+resource "aws_config_configuration_aggregator" "account" {
+  count      = "${var.aggregate_organization ? 1 : 0}"
+  depends_on = ["aws_iam_role_policy_attachment.aggregator"]
+  name       = "account-aggregator"
+
+  account_aggregation_source {
+    account_ids = ["${var.account_ids}"]
     all_regions = true
     role_arn    = "${aws_iam_role.aggregator.0.arn}"
   }

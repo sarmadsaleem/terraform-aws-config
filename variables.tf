@@ -10,6 +10,17 @@ variable "aggregate_organization" {
   default     = "false"
 }
 
+variable "aggregate_account" {
+  description = "Aggregate compliance data within account"
+  type        = "string"
+  default     = "false"
+}
+
+variable "account_ids" {
+  description = "List of account ids to aggregate"
+  type        = "list"
+}
+
 variable "config_logs_bucket" {
   description = "The S3 bucket for AWS Config logs."
   type        = "string"
